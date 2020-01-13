@@ -8,5 +8,39 @@
     <artifactId>ValeriiaPershakovaMobile</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <compiler.version>1.8</compiler.version>
+        <encoding.version>UTF-8</encoding.version>
+
+        <!--Libraries versions-->
+        <testng.version>7.0.0</testng.version>
+        <selenium.version>3.141.59</selenium.version>
+        <appium.version>7.3.0</appium.version>
+
+
+        <!--Plugins version-->
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>${appium.version}</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
