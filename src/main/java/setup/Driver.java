@@ -1,5 +1,6 @@
 package setup;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -25,7 +26,6 @@ public class Driver extends TestProperties {
     protected static String SUT; // site under testing
     protected static String TEST_PLATFORM;
     protected static String DRIVER;
-    protected static String CHROMEDRIVER;
     protected static String QUERY;
     protected static String HOMEPAGETITLE;
     protected static String EMAIL;
@@ -45,7 +45,6 @@ public class Driver extends TestProperties {
 
         String t_sut = getProp(propertyFile, "sut");
         SUT = t_sut == null ? null : "https://" + t_sut;
-        CHROMEDRIVER = SUT == null ? null : getProp(propertyFile, "chromedriver");
         QUERY = getProp(propertyFile, "query");
         HOMEPAGETITLE = getProp(propertyFile, "homePageTitle");
         EMAIL = getProp(propertyFile, "email");
@@ -77,7 +76,7 @@ public class Driver extends TestProperties {
         }
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, TEST_PLATFORM);
 
-        // Setup type of application: mobile, web (or hybrid)
+        // Setup type of application: native, web
         if (AUT != null && SUT == null) {
             // Native
             File app = new File(AUT);
@@ -85,9 +84,8 @@ public class Driver extends TestProperties {
         } else if (SUT != null && AUT == null) {
             // Web
             capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, browserName);
-            if (CHROMEDRIVER != null) {
-                capabilities.setCapability("chromedriverExecutable", CHROMEDRIVER);
-            }
+            // this is required to prevent exception "Cannot call non W3C standard" for <77 chromedriver version
+            capabilities.setCapability("appium:chromeOptions", ImmutableMap.of("w3c", false));
         } else {
             throw new Exception("Unclear type of mobile app");
         }
@@ -112,6 +110,11 @@ public class Driver extends TestProperties {
         }
     }
 
+    /**
+     * Provide instance of AppiumDriver object
+     *
+     * @return AppiumDriver
+     */
     protected AppiumDriver driver() {
         if (driver == null) {
             throw new RuntimeException("Driver hasn't been initialized");
@@ -119,7 +122,12 @@ public class Driver extends TestProperties {
         return driver;
     }
 
-    protected WebDriverWait driverWait() throws Exception {
+    /**
+     * Provide instance of WebDriverWait object
+     *
+     * @return WebDriverWait
+     */
+    protected WebDriverWait driverWait()  {
         return waitSingle;
     }
 }

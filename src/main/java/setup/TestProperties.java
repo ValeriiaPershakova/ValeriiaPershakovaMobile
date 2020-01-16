@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * TestProperties class purpose is to read properties from file
+ */
 public class TestProperties {
     private Properties currentProps = new Properties();
 

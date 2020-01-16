@@ -18,12 +18,10 @@ Tests need appropriate capabilities and variables. Properties files are located 
 - Web tests:
   - sut: testing site address in format www.[site name].[domain]
   - homePageTitle: expected title of the first open page
-  - chromedriver: absolute path to chromedriver for mobile app
   - query: searched word
 ###Run
-1. Set appropriate properties. Make sure your chromedriver version matches Chrome version on your device. (Pre-set version: 79.0.3945.36)
 2. Run device emulator
-3. Start Appium desktop server
+3. Start Appium desktop server with "relaxed security" option
 4. Run Maven with desired profile 
 ###Notes
 Native Test ***fails***, because app behaviour does not correspond to common sense.

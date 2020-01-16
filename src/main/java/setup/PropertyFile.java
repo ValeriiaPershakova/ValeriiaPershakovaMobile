@@ -9,7 +9,7 @@ public enum PropertyFile {
 
     private String filePath;
 
-    private PropertyFile(String filePath) {
+    PropertyFile(String filePath) {
         this.filePath = filePath;
     }
 
