@@ -19,7 +19,7 @@ Tests need appropriate capabilities and variables. Properties files are located 
   - aut: absolute path to testing app
   - email | username | password: parameters for new app account
 - Web tests:
-  - sut: testing site address in format www.[site name].[domain]
+  - sut: testing site address in format "[www].[site name].[domain]"
   - homePageTitle: expected title of the first open page
   - query: searched word
 
