@@ -1,6 +1,7 @@
 package setup;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -26,10 +27,18 @@ public class Driver extends TestProperties {
     protected static String DRIVER;
     protected static String CHROMEDRIVER;
     protected static String QUERY;
+    protected static String HOMEPAGETITLE;
+    protected static String EMAIL;
+    protected static String USERNAME;
+    protected static String PASSWORD;
 
 
-    // Constructor initializes properties on driver creation
-    protected void initProps(PropertyFile propertyFile) throws IOException {
+    /**
+     * Initialize properties from appropriate file
+     *
+     * @throws IOException
+     */
+    private void initProps(PropertyFile propertyFile) throws IOException {
         TEST_PLATFORM = getProp(propertyFile, "platform");
         DRIVER = getProp(propertyFile, "driver");
         AUT = getProp(propertyFile, "aut");
@@ -38,10 +47,14 @@ public class Driver extends TestProperties {
         SUT = t_sut == null ? null : "https://" + t_sut;
         CHROMEDRIVER = SUT == null ? null : getProp(propertyFile, "chromedriver");
         QUERY = getProp(propertyFile, "query");
+        HOMEPAGETITLE = getProp(propertyFile, "homePageTitle");
+        EMAIL = getProp(propertyFile, "email");
+        USERNAME = getProp(propertyFile, "username");
+        PASSWORD = getProp(propertyFile, "password");
     }
 
     /**
-     * Initialize driver with appropriate capabilities depending on platform and application
+     * Initialize driver with appropriate capabilities depending on platform, test type and application
      *
      * @throws Exception
      */
@@ -81,11 +94,10 @@ public class Driver extends TestProperties {
 
 
         // Init driver for local Appium server with capabilities have been set
-        // BUILDER AndroidDriver (depends on platform)
         if (driver == null) {
             switch (TEST_PLATFORM) {
                 case "Android": {
-                    driver = new AppiumDriver(new URL(DRIVER), capabilities);
+                    driver = new AndroidDriver(new URL(DRIVER), capabilities);
                     break;
                 }
                 case "iOS": {
@@ -100,10 +112,9 @@ public class Driver extends TestProperties {
         }
     }
 
-    protected AppiumDriver driver() throws Exception {
+    protected AppiumDriver driver() {
         if (driver == null) {
             throw new RuntimeException("Driver hasn't been initialized");
-            //prepareDriver();
         }
         return driver;
     }

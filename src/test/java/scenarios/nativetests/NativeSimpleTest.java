@@ -9,26 +9,19 @@ import scenarios.Hooks;
 
 @Test(groups = "native")
 public class NativeSimpleTest extends Hooks {
-    private String email = "test@epam.com";
-    private String username = "username";
-    private String password = "1234pass";
 
-
-    @Test
-    /**
-     * This simple test just click on button 'Add contact'
-     */
+    @Test(description = "This test register new account in Epam Test App and sign in with new credentials")
     public void epamTestAppTest() throws Exception {
         SoftAssert softAssert = new SoftAssert();
+        String appPackageName = "platkovsky.alexey.epamtestapp:id/";
 
         //start (login) page
-        String appPackageName = "platkovsky.alexey.epamtestapp:id/";
         By registerBtn = By.id(appPackageName + "register_button");
         driver().findElement(registerBtn).click();
 
         //registration page
-        By title = By.id(appPackageName + "action_bar");
-        By registrationTitle = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView");
+        By registrationTitle =
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView");
         driverWait().until(ExpectedConditions.presenceOfElementLocated(registrationTitle));
         String titleText = driver().findElement(registrationTitle).getText();
         softAssert.assertEquals(titleText, "Registration");
@@ -38,10 +31,10 @@ public class NativeSimpleTest extends Hooks {
         By registrationPswd = By.id(appPackageName + "registration_password");
         By confirmPswd = By.id(appPackageName + "registration_confirm_password");
 
-        driver().findElement(registrationEmail).sendKeys(email);
-        driver().findElement(usernameTextField).sendKeys(username);
-        driver().findElement(registrationPswd).sendKeys(password);
-        driver().findElement(confirmPswd).sendKeys(password);
+        driver().findElement(registrationEmail).sendKeys(EMAIL);
+        driver().findElement(usernameTextField).sendKeys(USERNAME);
+        driver().findElement(registrationPswd).sendKeys(PASSWORD);
+        driver().findElement(confirmPswd).sendKeys(PASSWORD);
 
 
         WebElement agreementCheckbox = driver().findElement(
@@ -53,7 +46,8 @@ public class NativeSimpleTest extends Hooks {
         driver().findElement(registerNewAccountBtn).click();
 
         // start (login) page
-        By startPageTitle = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView\n");
+        By startPageTitle =
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView\n");
         driverWait().until(ExpectedConditions.presenceOfElementLocated(startPageTitle));
         titleText = driver().findElement(startPageTitle).getText();
         softAssert.assertEquals(titleText, "EPAM Test App");
@@ -61,16 +55,18 @@ public class NativeSimpleTest extends Hooks {
         By loginEmail = By.id(appPackageName + "login_email");
         By loginPwd = By.id(appPackageName + "login_pwd");
 
-        driver().findElement(loginEmail).sendKeys(email);
-        driver().findElement(loginPwd).sendKeys(password);
+        driver().findElement(loginEmail).sendKeys(EMAIL);
+        driver().findElement(loginPwd).sendKeys(PASSWORD);
         By signInBtn = By.id(appPackageName + "email_sign_in_button");
         driver().findElement(signInBtn).click();
 
         //budgetActivity page
-        By budgetActivityTitle = By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.TextView");
+        By budgetActivityTitle =
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.view.ViewGroup/android.widget.TextView");
         driverWait().until(ExpectedConditions.presenceOfElementLocated(budgetActivityTitle));
         titleText = driver().findElement(budgetActivityTitle).getText();
         softAssert.assertEquals(titleText, "BudgetActivity");
+
 
         softAssert.assertAll();
         System.out.println("EPAMTestApp test done");

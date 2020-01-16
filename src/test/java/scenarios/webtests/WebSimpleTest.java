@@ -1,6 +1,5 @@
 package scenarios.webtests;
 
-import Utils.Screen;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,7 +16,7 @@ public class WebSimpleTest extends Hooks {
     public void googleTest() throws Exception {
         driver().get(SUT);
         driverWait().until(ExpectedConditions.urlMatches(SUT + ".*\\/.*"));
-        driverWait().until(ExpectedConditions.titleContains("Google"));
+        driverWait().until(ExpectedConditions.titleContains(HOMEPAGETITLE));
 
 
         driver().findElement(By.xpath("//input[@name='q']")).sendKeys(QUERY);
@@ -26,19 +25,10 @@ public class WebSimpleTest extends Hooks {
         driverWait().until(ExpectedConditions.urlContains(QUERY));
 
         By result = By.xpath("//div[@class='srg']//*[contains(text(),'" + QUERY + "')]");
-        boolean isFoundElement = driver().findElements(result).size() > 0;
-        try {
-            while (!isFoundElement) {
-                Screen.swipeVertical(driver(), 0.9, 0.1, 0.5, 2000);
-                isFoundElement = driver().findElements(result).size() > 0;
-            }
-        } catch (Exception e) {
-            System.out.println("error occured while scrolling to find corresponding results");
-            e.printStackTrace();
-        }
 
-        List<WebElement> results = driver().findElements(By.xpath("//div[@class='srg']//*[contains(text(),'" + QUERY + "')]"));
+        List<WebElement> results = driver().findElements(result);
         Assert.assertFalse(results.isEmpty(), "it is impossible to find search results");
+
         System.out.println("Search is done");
 
 

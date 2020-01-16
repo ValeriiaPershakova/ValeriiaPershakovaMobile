@@ -8,15 +8,14 @@ import setup.PropertyFile;
 
 public class Hooks extends Driver {
 
-
-    @BeforeGroups(description = "Prepare driver to run test(s)",
+    @BeforeGroups(description = "Prepare driver to run webtest(s)",
             groups = "web")
     public void setUpWeb() throws Exception {
         prepareDriver(PropertyFile.WEB);
         System.out.println("Driver prepared");
     }
 
-    @BeforeGroups(description = "Prepare driver to run test(s)",
+    @BeforeGroups(description = "Prepare driver to run nativtest(s)",
             groups = "native")
     public void setUpNative() throws Exception {
         prepareDriver(PropertyFile.NATIVE);
