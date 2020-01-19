@@ -32,6 +32,7 @@ public class Driver extends TestProperties {
     protected static String AUT; //(mobile) app under testing
     protected static String APP_PACKAGE;
     protected static String APP_ACTIVITY;
+    protected static String BUNDLE_ID;
     protected static String EMAIL;
     protected static String USERNAME;
     protected static String PASSWORD;
@@ -59,6 +60,7 @@ public class Driver extends TestProperties {
         AUT = getProp("aut");
         APP_PACKAGE = getProp("package");
         APP_ACTIVITY = getProp("activity");
+        BUNDLE_ID = getProp("bundleId");
 
         String t_sut = getProp("sut");
         SUT = t_sut == null ? null : "https://" + t_sut;
@@ -122,6 +124,7 @@ public class Driver extends TestProperties {
                 }
                 case "iOS": {
                     capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+                    capabilities.setCapability("bundleId", BUNDLE_ID);
                     break;
                 }
 
@@ -163,7 +166,7 @@ public class Driver extends TestProperties {
             driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         }
         if (waitSingle == null) {
-            waitSingle = new WebDriverWait(driver, 10);
+            waitSingle = new WebDriverWait(driver, 20);
         }
     }
 

@@ -49,15 +49,33 @@
             </properties>
         </profile>
         <profile>
-            <id>NativeTests</id>
+            <id>NativeTestsOnAndroid</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
                 <suite.file>src/test/resources/testSuites/nativeTestSuite.xml</suite.file>
                 <platform.native>Android</platform.native>
-                <!--udid>89HY075AQ</udid-->
-                <udid>e177f1da</udid>
+                <udid>89HY075AQ</udid>
+                <!--                <udid>e177f1da</udid>-->
+            </properties>
+        </profile>
+        <profile>
+            <id>NativeTestsOnIOS</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>src/test/resources/testSuites/nativeTestSuite.xml</suite.file>
+                <platform.native>iOS</platform.native>
+                <!--                iPhone XS-->
+                <!--                <udid>00008020-001C10600E32002E</udid>-->
+                <!--                iPhone SE-->
+                <!--                                <udid>ec645b7fe329a5ee0b53bd3494ad2cd8963ec07a</udid>-->
+                <!--                iPhone7-->
+                <udid>fa7decbf149acbf5f395539a25635d9844c169d3</udid>
+                <!--                iPhone8 Plus-->
+                <!--                                <udid>3e50758dd2e1179a014ee7b51dc4285d73118107</udid>-->
             </properties>
         </profile>
     </profiles>

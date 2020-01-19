@@ -17,11 +17,11 @@ public class LoginPage extends AbstractBasePage {
     private WebElement registerBtn;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
-    @iOSXCUITFindBy(xpath = "/XCUIElementTypeStaticText[@name='Sign In']")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Sign In']")
     private WebElement signInBtn;
 
     @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_email")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Email or username']/following-sibling::XCUIElementTypeTextField")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Username or email']/following-sibling::XCUIElementTypeTextField")
     private WebElement emailTextField;
 
     @FindBy(id = "platkovsky.alexey.epamtestapp:id/login_pwd")
@@ -29,7 +29,8 @@ public class LoginPage extends AbstractBasePage {
     private WebElement pswdTextField;
 
     @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView\n")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name='EPAM Test App']")
+    //@iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@label='EPAM Test App']")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeNavigationBar/XCUIElementTypeOther[@label='EPAM Test App']")
     private WebElement pageTitle;
 
     public LoginPage(AppiumDriver driver) {

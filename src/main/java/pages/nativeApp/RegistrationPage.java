@@ -6,7 +6,6 @@ import io.appium.java_client.pagefactory.HowToUseLocators;
 import io.appium.java_client.pagefactory.LocatorGroupStrategy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import pages.AbstractBasePage;
 
 /**
@@ -16,19 +15,31 @@ public class RegistrationPage extends AbstractBasePage {
     @HowToUseLocators(androidAutomation = LocatorGroupStrategy.ALL_POSSIBLE)
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView")
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.widget.FrameLayout[1]/android.view.View/android.widget.TextView")
-    @iOSXCUITFindBy(xpath = "")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@label='Registration']")
     private WebElement pageTitle;
-    @FindBy(id = "platkovsky.alexey.epamtestapp:id/registration_email")
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_email")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Email']/following-sibling::XCUIElementTypeTextField")
     private WebElement registrationEmail;
-    @FindBy(id = "platkovsky.alexey.epamtestapp:id/registration_username")
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_username")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Username']/following-sibling::XCUIElementTypeTextField")
     private WebElement usernameTextField;
-    @FindBy(id = "platkovsky.alexey.epamtestapp:id/registration_password")
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_password")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Password']/following-sibling::XCUIElementTypeSecureTextField")
     private WebElement registrationPswd;
-    @FindBy(id = "platkovsky.alexey.epamtestapp:id/registration_confirm_password")
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/registration_confirm_password")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Confirm password']/following-sibling::XCUIElementTypeSecureTextField")
     private WebElement confirmPswd;
-    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.CheckedTextView")
+
+    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.CheckedTextView")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeSwitch[@name='I read agreaments and agree wit it']")
     private WebElement agreementCheckbox;
-    @FindBy(id = "platkovsky.alexey.epamtestapp:id/register_new_account_button")
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_new_account_button")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Register new account']")
     private WebElement registerNewAccountBtn;
 
     public RegistrationPage(AppiumDriver driver) {
@@ -59,12 +70,32 @@ public class RegistrationPage extends AbstractBasePage {
         return agreementCheckbox;
     }
 
+    public String getAgreementCheckboxState() {
+        String state = null;
+        try {
+            state = agreementCheckbox.getAttribute("selected");
+            return state;
+        } catch (Exception e) {
+        }
+        try {
+            state = agreementCheckbox.getAttribute("value");
+
+        } catch (Exception ex) {
+        }
+        return state;
+
+    }
+
     public void register() {
         registerNewAccountBtn.click();
     }
 
     public String getPageTitleText() {
         return pageTitle.getText();
+    }
+
+    public WebElement getPageTitle() {
+        return pageTitle;
     }
 
     public WebElement getRegistrationEmail() {

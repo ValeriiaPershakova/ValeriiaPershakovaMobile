@@ -1,5 +1,7 @@
 package scenarios.nativetests;
 
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -26,7 +28,8 @@ public class NativeSimpleTest extends Hooks {
 
         //registration page
         RegistrationPage registrationPage = new RegistrationPage(driver());
-        driverWait().until(ExpectedConditions.visibilityOf(registrationPage.getRegistrationEmail()));
+        //driverWait().until(ExpectedConditions.visibilityOf(registrationPage.getRegistrationEmail()));
+        driverWait().until(ExpectedConditions.visibilityOf(registrationPage.getPageTitle()));
         softAssert.assertEquals(registrationPage.getPageTitleText(), "Registration",
                 format("Inexpected title of Registration page: %s", registrationPage.getPageTitleText()));
         registrationPage.setEmail(EMAIL);
@@ -34,9 +37,14 @@ public class NativeSimpleTest extends Hooks {
         registrationPage.setPassword(PASSWORD);
         registrationPage.confirmPassword(PASSWORD);
         registrationPage.setAgreementCheckbox();
-        softAssert.assertTrue(registrationPage.getAgreementCheckbox().isSelected(),
-                "Checkbox isn't selected");
+        //driver().hideKeyboard();
+//        softAssert.assertTrue(registrationPage.getAgreementCheckboxState().matches("(1)|(true)"),
+//                "Checkbox isn't selected");
+        TouchAction touchAction = new TouchAction(driver());
+
+        touchAction.tap(PointOption.point(150, 150)).perform();
         registrationPage.register();
+
 
         // start (login) page
         driverWait().until(ExpectedConditions.visibilityOf(loginPage.getRegisterBtn()));
@@ -44,6 +52,8 @@ public class NativeSimpleTest extends Hooks {
                 format("Inexpected title of Login page: %s", loginPage.getPageTitleText()));
         loginPage.setEmail(EMAIL);
         loginPage.setPassword(PASSWORD);
+        //driver().hideKeyboard();
+        touchAction.tap(PointOption.point(150, 150)).perform();
         loginPage.signIn();
 
         //budgetActivity page
