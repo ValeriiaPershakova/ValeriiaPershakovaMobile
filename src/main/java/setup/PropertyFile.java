@@ -1,19 +1,16 @@
 package setup;
 
-/**
- * Contains path to appropriate properties files in accordance with test type
- */
 public enum PropertyFile {
-    WEB("/webtest.properties"),
-    NATIVE("/nativetest.properties");
+    INSTANCE;
 
-    private String filePath;
+    private String propFilePath;
 
-    PropertyFile(String filePath) {
-        this.filePath = filePath;
+
+    public static void setInstance(PropertyType propertyType) {
+        INSTANCE.propFilePath = propertyType.getFilePath();
     }
 
-    public String getFilePath() {
-        return filePath;
+    public static String getPropertiesPath() {
+        return INSTANCE.propFilePath;
     }
 }

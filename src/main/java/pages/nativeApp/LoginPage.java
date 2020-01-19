@@ -1,6 +1,8 @@
 package pages.nativeApp;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.AbstractBasePage;
@@ -9,15 +11,25 @@ import pages.AbstractBasePage;
  * Class describes and initializes elements on Login page
  */
 public class LoginPage extends AbstractBasePage {
-    @FindBy(id = "platkovsky.alexey.epamtestapp:id/register_button")
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/register_button")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Register new account']")
     private WebElement registerBtn;
-    @FindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/email_sign_in_button")
+    @iOSXCUITFindBy(xpath = "/XCUIElementTypeStaticText[@name='Sign In']")
     private WebElement signInBtn;
-    @FindBy(id = "platkovsky.alexey.epamtestapp:id/login_email")
+
+    @AndroidFindBy(id = "platkovsky.alexey.epamtestapp:id/login_email")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Email or username']/following-sibling::XCUIElementTypeTextField")
     private WebElement emailTextField;
+
     @FindBy(id = "platkovsky.alexey.epamtestapp:id/login_pwd")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name='Password']/following-sibling::XCUIElementTypeSecureTextField")
     private WebElement pswdTextField;
+
     @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView\n")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@name='EPAM Test App']")
     private WebElement pageTitle;
 
     public LoginPage(AppiumDriver driver) {

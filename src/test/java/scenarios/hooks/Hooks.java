@@ -4,6 +4,7 @@ import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeGroups;
 import setup.Driver;
 import setup.PropertyFile;
+import setup.PropertyType;
 
 /**
  * Hooks class purpose is to load and set driver's properties according to the test type (native, web)
@@ -13,14 +14,16 @@ public class Hooks extends Driver {
     @BeforeGroups(description = "Prepare driver to run webtest(s)",
             groups = "web")
     public void setUpWeb() throws Exception {
-        prepareDriver(PropertyFile.WEB);
+        PropertyFile.setInstance(PropertyType.WEB);
+        prepareDriver();
         System.out.println("Driver prepared");
     }
 
     @BeforeGroups(description = "Prepare driver to run nativtest(s)",
             groups = "native")
     public void setUpNative() throws Exception {
-        prepareDriver(PropertyFile.NATIVE);
+        PropertyFile.setInstance(PropertyType.NATIVE);
+        prepareDriver();
         System.out.println("Driver prepared");
     }
 

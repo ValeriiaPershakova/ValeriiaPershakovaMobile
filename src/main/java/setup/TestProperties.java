@@ -10,15 +10,17 @@ import java.util.Properties;
 public class TestProperties {
     private Properties currentProps = new Properties();
 
-    private Properties getCurrentProps(PropertyFile propertyFile) throws IOException {
-        FileInputStream in = new FileInputStream(System.getProperty("user.dir") + propertyFile.getFilePath());
+    private Properties getCurrentProps() throws IOException {
+        FileInputStream in = new FileInputStream(System.getProperty("user.dir") + PropertyFile.getPropertiesPath());
         currentProps.load(in);
         in.close();
         return currentProps;
     }
 
-    protected String getProp(PropertyFile filePath, String propKey) throws IOException {
-        if (!currentProps.containsKey(propKey)) currentProps = getCurrentProps(filePath);
+    protected String getProp(String propKey) throws IOException {
+        if (!currentProps.containsKey(propKey)) {
+            currentProps = getCurrentProps();
+        }
         // "default" form used to handle the absence of parameter
         return currentProps.getProperty(propKey, null);
     }

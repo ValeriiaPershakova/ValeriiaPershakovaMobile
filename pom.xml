@@ -16,6 +16,7 @@
         <testng.version>7.0.0</testng.version>
         <selenium.version>3.141.59</selenium.version>
         <appium.version>7.3.0</appium.version>
+        <restassure.version>3.2.0</restassure.version>
 
 
         <!--Plugins version-->
@@ -25,12 +26,26 @@
 
     <profiles>
         <profile>
-            <id>WebTests</id>
+            <id>WebTestsOnAndroid</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <suite.file>src/test/resources/webTestSuite.xml</suite.file>
+                <suite.file>src/test/resources/testSuites/webTestSuite.xml</suite.file>
+                <platform.web>Android</platform.web>
+                <udid>89HY075AQ</udid>
+            </properties>
+        </profile>
+        <profile>
+            <id>WebTestsOnIOS</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>src/test/resources/testSuites/webTestSuite.xml</suite.file>
+                <platform.web>iOS</platform.web>
+                <!--udid>46b85cc4844fd82a371b826d47dc0b5921a3a0cf</udid-->
+                <udid></udid>
             </properties>
         </profile>
         <profile>
@@ -39,7 +54,10 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <suite.file>src/test/resources/nativeTestSuite.xml</suite.file>
+                <suite.file>src/test/resources/testSuites/nativeTestSuite.xml</suite.file>
+                <platform.native>Android</platform.native>
+                <!--udid>89HY075AQ</udid-->
+                <udid>e177f1da</udid>
             </properties>
         </profile>
     </profiles>
@@ -56,9 +74,20 @@
             <artifactId>java-client</artifactId>
             <version>${appium.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${restassure.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <testResources>
+            <testResource>
+                <filtering>true</filtering>
+                <directory>src/test/resources/properties/</directory>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

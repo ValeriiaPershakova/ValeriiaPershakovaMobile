@@ -1,6 +1,10 @@
 package pages.nativeApp;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.HowToUseLocators;
+import io.appium.java_client.pagefactory.LocatorGroupStrategy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.AbstractBasePage;
@@ -9,7 +13,10 @@ import pages.AbstractBasePage;
  * Class describes and initializes elements on Registration page
  */
 public class RegistrationPage extends AbstractBasePage {
-    @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView")
+    @HowToUseLocators(androidAutomation = LocatorGroupStrategy.ALL_POSSIBLE)
+    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView")
+    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.View/android.widget.FrameLayout[1]/android.view.View/android.widget.TextView")
+    @iOSXCUITFindBy(xpath = "")
     private WebElement pageTitle;
     @FindBy(id = "platkovsky.alexey.epamtestapp:id/registration_email")
     private WebElement registrationEmail;
