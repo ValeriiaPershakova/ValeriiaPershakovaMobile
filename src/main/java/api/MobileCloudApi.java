@@ -48,13 +48,7 @@ public class MobileCloudApi {
      * @return UDID of the taken device
      */
     public static String takeDevice(DesiredCapabilities capabilities) {
-        JsonObject jsonCaps = new JsonObject();
-        jsonCaps.addProperty("platformName", String.valueOf(capabilities.getPlatform()));
-        if (capabilities.getCapability("udid") != null) {
-            jsonCaps.addProperty("udid", String.valueOf(capabilities.getCapability("udid")));
-        }
-        JsonObject body = new JsonObject();
-        body.add("desiredCapabilities", jsonCaps);
+        JsonObject body = getTakeRequestBody(capabilities);
         ValidatableResponse response = RestAssured.given(baseRequestConfiguration)
                 .contentType(ContentType.JSON)
                 .body(body)
@@ -66,6 +60,7 @@ public class MobileCloudApi {
         return response.extract()
                 .path("desiredCapabilities.udid");
     }
+
 
     /**
      * installAppToDevice method install app on device (defined by UDID)
@@ -90,5 +85,16 @@ public class MobileCloudApi {
         Matcher matcher = pattern.matcher(Driver.getURL());
         matcher.find();
         return matcher.group() + "/automation/api";
+    }
+
+    private static JsonObject getTakeRequestBody(DesiredCapabilities capabilities) {
+        JsonObject jsonCaps = new JsonObject();
+        jsonCaps.addProperty("platformName", String.valueOf(capabilities.getPlatform()));
+        if (capabilities.getCapability("udid") != null) {
+            jsonCaps.addProperty("udid", String.valueOf(capabilities.getCapability("udid")));
+        }
+        JsonObject body = new JsonObject();
+        body.add("desiredCapabilities", jsonCaps);
+        return body;
     }
 }
