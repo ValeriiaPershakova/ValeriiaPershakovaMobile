@@ -14,11 +14,11 @@ Tests need appropriate capabilities and variables. Test properties files are loc
 + Device:
   - platform: [ Android | iOS ] Default values are set in POM.xml file as profile properties.
   - driver: appium server URL
-  - udid: device serial id. Default values are set in POM.xml file as profile properties. It's possible to leave this parameter without value (not recommended) or to set directly in .properties file.
+  - udid: device serial id. Default values are set in POM.xml file as profile properties. It's possible to leave this parameter without value (not recommended) or to set in POM.xml or directly in .properties file.
 - Native tests:
   - aut: absolute path to testing app
   - (package | activity) | bundleID: parameters to run app on Android | iOS device
-  - email | username | password: parameters for new app account
+  - email | username | password: test data for new app account
 - Web tests:
   - sut: testing site address in format "[www].[site name].[domain]"
   - homePageTitle: expected title of the first open page
