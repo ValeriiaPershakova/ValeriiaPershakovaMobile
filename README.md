@@ -24,13 +24,14 @@ Tests need appropriate capabilities and variables. Test properties files are loc
   - homePageTitle: expected title of the first open page
   - query: searched word
   
-Also to run tests you need to create credentials.properties file in the root of the project and set property:
-'token={your token}'
+**Also to run tests you need to create credentials.properties file in the root of the project and set property:
+'token={your token}'**
 
 Run
 ---
-1. Connect to EPAM Network
-2. Run Maven project with one desired profile 
+1. Create credentials.properties file with token
+2. Connect to EPAM Network
+3. Run Maven project with one desired profile 
 
 **Do not forget to release the device after test, "keepDevice" option is enabled.**
 
