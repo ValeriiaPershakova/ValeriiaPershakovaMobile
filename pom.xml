@@ -46,7 +46,8 @@
             <properties>
                 <suite.file>src/test/resources/testSuites/webTestSuite.xml</suite.file>
                 <platform>iOS</platform>
-                <udid></udid>
+                <!--                iPhone 8-->
+                <udid>534f0e801193554c2f704df4b5ad5b560f0c934f</udid>
             </properties>
         </profile>
         <profile>
