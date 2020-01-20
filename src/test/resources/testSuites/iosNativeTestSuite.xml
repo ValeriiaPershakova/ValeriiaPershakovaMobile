@@ -1,9 +1,13 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Web tests Suite">
-    <test name="Web tests">
+<suite name="Native iOS tests Suite">
+    <test name="Native iOS tests">
         <groups>
-            <run>
+            <define name="ios native">
+                <include name="ios"/>
                 <include name="native"/>
+            </define>
+            <run>
+                <include name="ios native"/>
             </run>
         </groups>
         <classes>

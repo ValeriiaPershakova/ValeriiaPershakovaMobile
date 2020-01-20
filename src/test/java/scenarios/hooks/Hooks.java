@@ -20,9 +20,17 @@ public class Hooks extends Driver {
     }
 
     @BeforeGroups(description = "Prepare driver to run nativtest(s)",
-            groups = "native")
-    public void setUpNative() throws Exception {
-        PropertyFile.setInstance(PropertyType.NATIVE);
+            groups = {"android"})
+    public void setUpNativeAndroid() throws Exception {
+        PropertyFile.setInstance(PropertyType.NATIVE_ANDROID);
+        prepareDriver();
+        System.out.println("Driver prepared");
+    }
+
+    @BeforeGroups(description = "Prepare driver to run nativtest(s)",
+            groups = {"ios"})
+    public void setUpNativeIos() throws Exception {
+        PropertyFile.setInstance(PropertyType.NATIVE_IOS);
         prepareDriver();
         System.out.println("Driver prepared");
     }

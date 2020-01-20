@@ -66,26 +66,6 @@ public class RegistrationPage extends AbstractBasePage {
         agreementCheckbox.click();
     }
 
-    public WebElement getAgreementCheckbox() {
-        return agreementCheckbox;
-    }
-
-    public String getAgreementCheckboxState() {
-        String state = null;
-        try {
-            state = agreementCheckbox.getAttribute("selected");
-            return state;
-        } catch (Exception e) {
-        }
-        try {
-            state = agreementCheckbox.getAttribute("value");
-
-        } catch (Exception ex) {
-        }
-        return state;
-
-    }
-
     public void register() {
         registerNewAccountBtn.click();
     }
@@ -98,7 +78,4 @@ public class RegistrationPage extends AbstractBasePage {
         return pageTitle;
     }
 
-    public WebElement getRegistrationEmail() {
-        return registrationEmail;
-    }
 }

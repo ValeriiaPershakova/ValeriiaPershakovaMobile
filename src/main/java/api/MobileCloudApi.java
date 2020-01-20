@@ -13,7 +13,7 @@ import io.restassured.specification.ResponseSpecification;
 import org.apache.http.HttpStatus;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import setup.Driver;
-import setup.TokenInstance;
+import setup.TokenHandler;
 
 import java.io.File;
 import java.util.regex.Matcher;
@@ -22,32 +22,42 @@ import java.util.regex.Pattern;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.lessThan;
 
+/**
+ * Class provides methods to work with MobileCloud API
+ */
 public class MobileCloudApi {
-    public static RequestSpecification baseRequestConfiguration =
+    private static RequestSpecification baseRequestConfiguration =
             new RequestSpecBuilder()
-                    .addHeader("Authorization", format("Bearer %s", TokenInstance.getToken()))
+                    .addHeader("Authorization", format("Bearer %s", TokenHandler.getToken()))
                     .setAccept(ContentType.JSON)
                     .setContentType(ContentType.ANY)
                     .setRelaxedHTTPSValidation()
                     .log(LogDetail.ALL)
                     .build();
-    public static ResponseSpecification baseSuccessfullResponse =
+
+    private static ResponseSpecification baseSuccessfullResponse =
             new ResponseSpecBuilder()
                     .expectResponseTime(lessThan(30000L))
                     .build();
     private static String baseUrl = getBaseUrl();
 
+    /**
+     * TakeDevice method send request to MobileCloud to take certain or random device if it is available
+     *
+     * @param capabilities contains desired device capabilities (platformName and UDID). At least platformName must be provided
+     * @return UDID of the taken device
+     */
     public static String takeDevice(DesiredCapabilities capabilities) {
         JsonObject jsonCaps = new JsonObject();
         jsonCaps.addProperty("platformName", String.valueOf(capabilities.getPlatform()));
         if (capabilities.getCapability("udid") != null) {
             jsonCaps.addProperty("udid", String.valueOf(capabilities.getCapability("udid")));
         }
-        JsonObject json = new JsonObject();
-        json.add("desiredCapabilities", jsonCaps);
+        JsonObject body = new JsonObject();
+        body.add("desiredCapabilities", jsonCaps);
         ValidatableResponse response = RestAssured.given(baseRequestConfiguration)
                 .contentType(ContentType.JSON)
-                .body(json)
+                .body(body)
                 .request(Method.POST, format("https://%s/device", baseUrl))
                 .prettyPeek()
                 .then()
@@ -57,6 +67,12 @@ public class MobileCloudApi {
                 .path("desiredCapabilities.udid");
     }
 
+    /**
+     * installAppToDevice method install app on device (defined by UDID)
+     *
+     * @param app        absolute path to app file
+     * @param deviceUDID
+     */
     public static void installAppToDevice(File app, String deviceUDID) {
         RestAssured.given(baseRequestConfiguration)
                 .contentType("multipart/form-data")
@@ -71,7 +87,7 @@ public class MobileCloudApi {
 
     private static String getBaseUrl() {
         Pattern pattern = Pattern.compile("\\w+[.\\w]+\\.\\w+");
-        Matcher matcher = pattern.matcher(Driver.getDriver());
+        Matcher matcher = pattern.matcher(Driver.getURL());
         matcher.find();
         return matcher.group() + "/automation/api";
     }

@@ -5,7 +5,8 @@ package setup;
  */
 public enum PropertyType {
     WEB("/target/test-classes/webtest.properties"),
-    NATIVE("/target/test-classes/nativetest.properties");
+    NATIVE_IOS("/target/test-classes/iOSnativetest.properties"),
+    NATIVE_ANDROID("/target/test-classes/androidnativetest.properties");
 
     private String filePath;
 

@@ -29,7 +29,6 @@ public class LoginPage extends AbstractBasePage {
     private WebElement pswdTextField;
 
     @FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.TextView\n")
-    //@iOSXCUITFindBy(xpath = "//XCUIElementTypeOther[@label='EPAM Test App']")
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeApplication/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeNavigationBar/XCUIElementTypeOther[@label='EPAM Test App']")
     private WebElement pageTitle;
 

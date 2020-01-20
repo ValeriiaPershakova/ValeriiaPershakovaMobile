@@ -32,8 +32,10 @@
             </activation>
             <properties>
                 <suite.file>src/test/resources/testSuites/webTestSuite.xml</suite.file>
-                <platform.web>Android</platform.web>
+                <platform>Android</platform>
                 <udid>89HY075AQ</udid>
+                <!--                Google Pixel 2-->
+                <udid>HT79W1A05739</udid>
             </properties>
         </profile>
         <profile>
@@ -43,8 +45,7 @@
             </activation>
             <properties>
                 <suite.file>src/test/resources/testSuites/webTestSuite.xml</suite.file>
-                <platform.web>iOS</platform.web>
-                <!--udid>46b85cc4844fd82a371b826d47dc0b5921a3a0cf</udid-->
+                <platform>iOS</platform>
                 <udid></udid>
             </properties>
         </profile>
@@ -54,10 +55,10 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <suite.file>src/test/resources/testSuites/nativeTestSuite.xml</suite.file>
-                <platform.native>Android</platform.native>
+                <suite.file>src/test/resources/testSuites/androidNativeTestSuite.xml</suite.file>
+                <platform>Android</platform>
+                <!--                Google Pixel 3 XL-->
                 <udid>89HY075AQ</udid>
-                <!--                <udid>e177f1da</udid>-->
             </properties>
         </profile>
         <profile>
@@ -66,16 +67,10 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <suite.file>src/test/resources/testSuites/nativeTestSuite.xml</suite.file>
-                <platform.native>iOS</platform.native>
-                <!--                iPhone XS-->
-                <!--                <udid>00008020-001C10600E32002E</udid>-->
+                <suite.file>src/test/resources/testSuites/iosNativeTestSuite.xml</suite.file>
+                <platform>iOS</platform>
                 <!--                iPhone SE-->
-                <!--                                <udid>ec645b7fe329a5ee0b53bd3494ad2cd8963ec07a</udid>-->
-                <!--                iPhone7-->
-                <udid>fa7decbf149acbf5f395539a25635d9844c169d3</udid>
-                <!--                iPhone8 Plus-->
-                <!--                                <udid>3e50758dd2e1179a014ee7b51dc4285d73118107</udid>-->
+                <udid>ec645b7fe329a5ee0b53bd3494ad2cd8963ec07a</udid>
             </properties>
         </profile>
     </profiles>

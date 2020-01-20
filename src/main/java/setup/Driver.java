@@ -1,7 +1,6 @@
 package setup;
 
 import api.MobileCloudApi;
-import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -18,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class Driver extends TestProperties {
     private static AppiumDriver driver = null;
     private static WebDriverWait waitSingle = null;
+    private static DeviceProperties device = new DeviceProperties();
     protected DesiredCapabilities capabilities;
 
     // Properties to be read
@@ -25,8 +25,6 @@ public class Driver extends TestProperties {
     protected static String TEST_PLATFORM;
     protected static String UDID;
     protected static String DRIVER;
-    protected static String TOKEN;
-    protected static String PROJECT_NAME = "EPM-TSTF";
 
     //native
     protected static String AUT; //(mobile) app under testing
@@ -42,7 +40,7 @@ public class Driver extends TestProperties {
     protected static String QUERY;
     protected static String HOMEPAGETITLE;
 
-    public static String getDriver() {
+    public static String getURL() {
         return DRIVER;
     }
 
@@ -52,10 +50,9 @@ public class Driver extends TestProperties {
      * @throws IOException
      */
     private void initProps() throws IOException {
-        TEST_PLATFORM = getProp("platform");
-        DRIVER = getProp("driver");
-        UDID = getProp("udid");
-        //TOKEN = getProp(PropertyType.CREDENTIALS, "token");
+        TEST_PLATFORM = device.getProp("platform");
+        DRIVER = TokenHandler.insertToken(device.getProp("driver"));
+        UDID = device.getProp("udid");
 
         AUT = getProp("aut");
         APP_PACKAGE = getProp("package");
@@ -97,7 +94,6 @@ public class Driver extends TestProperties {
         // Setup test platform: Android or iOS. Browser also depends on a platform.
         switch (TEST_PLATFORM) {
             case "Android":
-                //capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5554"); // default Android emulator
                 browserName = "Chrome";
                 break;
             case "iOS":
@@ -107,62 +103,44 @@ public class Driver extends TestProperties {
                 throw new Exception("Unknown mobile platform");
         }
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, TEST_PLATFORM);
-        if (UDID != "") {
+
+        if (!("").equals(UDID)) {
             capabilities.setCapability(MobileCapabilityType.UDID, UDID);
         }
+        capabilities.setCapability("keepDevice", true);
 
         // Setup type of application: native, web
         if (AUT != null && SUT == null) {
             // Native
             File app = new File(AUT);
+            capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
             switch (TEST_PLATFORM) {
                 case "Android": {
-                    capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
                     capabilities.setCapability("appPackage", APP_PACKAGE);
                     capabilities.setCapability("appActivity", APP_ACTIVITY);
                     break;
                 }
                 case "iOS": {
-                    capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
                     capabilities.setCapability("bundleId", BUNDLE_ID);
                     break;
                 }
-
-
             }
+
             UDID = MobileCloudApi.takeDevice(capabilities);
             MobileCloudApi.installAppToDevice(app, UDID);
             capabilities.setCapability(MobileCapabilityType.UDID, UDID);
-            capabilities.setCapability("keepDevice", true);
 
         } else if (SUT != null && AUT == null) {
             // Web
             capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, browserName);
-            // this is required to prevent exception "Cannot call non W3C standard" for <77 chromedriver version
-            capabilities.setCapability("appium:chromeOptions", ImmutableMap.of("w3c", false));
-//            //capabilities.setCapability("chromedriverExecutableDir", System.getProperty("user.dir")+"\\src\\main\\resources\\chromedrivers");
-//            capabilities.setCapability("chromedriverExecutable", System.getProperty("user.dir")+"\\src\\main\\resources\\chromedrivers\\chromedriver_win32_v2.17.exe");
-
         } else {
             throw new Exception("Unclear type of mobile app");
         }
 
 
-        String url = TokenInstance.insertToken(DRIVER);
-        System.out.println(url);
         // Init driver for local Appium server with capabilities have been set
         if (driver == null) {
-//            switch (TEST_PLATFORM) {
-//                case "Android": {
-//                    driver = new AndroidDriver(new URL(url), capabilities);
-//                    break;
-//                }
-//                case "iOS": {
-//                    driver = new IOSDriver(new URL(url), capabilities);
-//                    break;
-//                }
-//            }
-            driver = new AppiumDriver(new URL(url), capabilities);
+            driver = new AppiumDriver(new URL(DRIVER), capabilities);
             driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         }
         if (waitSingle == null) {

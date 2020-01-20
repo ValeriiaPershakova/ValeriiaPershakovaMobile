@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Native Android tests Suite">
+    <test name="Native Android tests">
+        <groups>
+            <define name="android native">
+                <include name="native"/>
+                <include name="android"/>
+            </define>
+            <run>
+                <include name="android native"/>
+                <!--                <include name="android"/>-->
+
+            </run>
+        </groups>
+        <classes>
+            <class name="scenarios.nativetests.NativeSimpleTest"/>
+        </classes>
+    </test>
+</suite>

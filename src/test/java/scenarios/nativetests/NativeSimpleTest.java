@@ -15,12 +15,15 @@ import static java.lang.String.format;
 /**
  * Class contains test scripts for native app
  */
-@Test(groups = "native")
+@Test(groups = {"android", "ios", "native"})
 public class NativeSimpleTest extends Hooks {
 
     @Test(description = "This test register new account in Epam Test App and sign in with new credentials")
-    public void epamTestAppTest() throws Exception {
+    public void epamTestAppTest() {
         SoftAssert softAssert = new SoftAssert();
+        //touchActions are performed to hide keyboard and activate page. Method driver.hideKeyboard() is unstable on iOS-devices and can't be used
+        TouchAction touchAction = new TouchAction(driver());
+
         //start (login) page
         LoginPage loginPage = new LoginPage(driver());
         driverWait().until(ExpectedConditions.visibilityOf(loginPage.getRegisterBtn()));
@@ -28,7 +31,6 @@ public class NativeSimpleTest extends Hooks {
 
         //registration page
         RegistrationPage registrationPage = new RegistrationPage(driver());
-        //driverWait().until(ExpectedConditions.visibilityOf(registrationPage.getRegistrationEmail()));
         driverWait().until(ExpectedConditions.visibilityOf(registrationPage.getPageTitle()));
         softAssert.assertEquals(registrationPage.getPageTitleText(), "Registration",
                 format("Inexpected title of Registration page: %s", registrationPage.getPageTitleText()));
@@ -37,11 +39,10 @@ public class NativeSimpleTest extends Hooks {
         registrationPage.setPassword(PASSWORD);
         registrationPage.confirmPassword(PASSWORD);
         registrationPage.setAgreementCheckbox();
-        //driver().hideKeyboard();
-//        softAssert.assertTrue(registrationPage.getAgreementCheckboxState().matches("(1)|(true)"),
-//                "Checkbox isn't selected");
-        TouchAction touchAction = new TouchAction(driver());
-
+        /* Following assertion can't be perform both on Android and iOS devices because of the different attribute sets for Checkbox element
+        softAssert.assertTrue(registrationPage.getAgreementCheckboxState().matches("(1)|(true)"),
+                "Checkbox isn't selected");
+        */
         touchAction.tap(PointOption.point(150, 150)).perform();
         registrationPage.register();
 
@@ -52,13 +53,12 @@ public class NativeSimpleTest extends Hooks {
                 format("Inexpected title of Login page: %s", loginPage.getPageTitleText()));
         loginPage.setEmail(EMAIL);
         loginPage.setPassword(PASSWORD);
-        //driver().hideKeyboard();
+
         touchAction.tap(PointOption.point(150, 150)).perform();
+
         loginPage.signIn();
 
         //budgetActivity page
-        //driverWait().withTimeout(Duration.ofSeconds(10));
-
         BudgetActivityPage budgetActivityPage = new BudgetActivityPage(driver());
         driverWait().until(ExpectedConditions.visibilityOf(budgetActivityPage.getPageTitle()));
 
