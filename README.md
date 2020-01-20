@@ -32,6 +32,8 @@ Run
 1. Connect to EPAM Network
 2. Run Maven project with one desired profile 
 
+**Do not forget to release the device after test, "keepDevice" option is enabled.**
+
 About devices
 ---
 + Android
