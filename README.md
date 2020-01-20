@@ -37,7 +37,7 @@ About devices
 + Android
   - Web test: web test pass only on devices with latest version of Chrome (79.0.3945)
   - Native app test: although app can be installed on most android devices, test might failure because of the keyboard that hides some elements on the page.
-    Tested on Google devices
+    Passed on Google devices
 - iOS
   - Web test: pass on random device
   - Native app test: pass only on following devices:
